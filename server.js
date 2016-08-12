@@ -4,6 +4,7 @@ var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ShortURL = require("./public/js/shortener.js");
+var validUrl = require('valid-url');
 var ObjectID = mongodb.ObjectID;
 var URLS_COLLECTIONS = 'urls';
 
@@ -14,8 +15,8 @@ app.use(expressSanitizer());
 
 // Create database
 var db;
-// var url = 'mongodb://127.0.0.1:27017/urls'; // local
-var url = process.env.MONGODB_URI; // heroku deploy
+var url = 'mongodb://127.0.0.1:27017/urls'; // local
+// var url = process.env.MONGODB_URI; // heroku deploy
 
 mongodb.MongoClient.connect(url, function (err, database) {
     if (err) {
@@ -53,9 +54,7 @@ app.get('/urls', function (req, res) {
 });
 
 app.get("/urls/:id", function(req, res) {
-    console.log(req.params.id);
     req.params.id = req.sanitize(req.params.id);
-    console.log(req.params.id);
     db.collection(URLS_COLLECTIONS).find({ seqId: String(req.params.id) }).toArray( function(err, docs) {
         if (err) {
             handleError(res, err.message, "Failed to get url");
@@ -69,7 +68,7 @@ app.get("/urls/:id", function(req, res) {
 app.post("/urls", function(req, res) {
     var newUrl = req.body;
     console.log(req.body);
-    if (!(req.body.urlPath)) {
+    if (!req.body.urlPath || validUrl.isUri(req.body.urlPath)) {
         handleError(res, "Invalid user input", "Must provide a url.", 400);
     }
 
