@@ -67,9 +67,9 @@ app.get("/urls/:id", function(req, res) {
 
 app.post("/urls", function(req, res) {
     var newUrl = req.body;
-    console.log(req.body);
-    if (!req.body.urlPath || validUrl.isUri(req.body.urlPath)) {
+    if (!req.body.urlPath || !validUrl.isUri(req.body.urlPath)) {
         handleError(res, "Invalid user input", "Must provide a url.", 400);
+        return;
     }
 
     newUrl.seqId = String(Date.now());
