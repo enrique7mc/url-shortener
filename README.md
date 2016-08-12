@@ -9,3 +9,10 @@ This application is built with the MEAN stack
 - `npm start`
 
 Make sure `mongod` service is started.
+
+Live demo: https://stormy-shore-34616.herokuapp.com/#/
+
+**Missing features**
+- Analytics (click count)
+- Expiration
+- Custom URLs
