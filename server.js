@@ -15,8 +15,8 @@ app.use(expressSanitizer());
 
 // Create database
 var db;
-var url = 'mongodb://127.0.0.1:27017/urls'; // local
-// var url = process.env.MONGODB_URI; // heroku deploy
+// var url = 'mongodb://127.0.0.1:27017/urls'; // local
+var url = process.env.MONGODB_URI; // heroku deploy
 
 mongodb.MongoClient.connect(url, function (err, database) {
     if (err) {
