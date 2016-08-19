@@ -10,7 +10,7 @@ This application is built with the MEAN stack
 
 Make sure `mongod` service is started.
 
-Live demo: https://stormy-shore-34616.herokuapp.com/#/
+Live demo: https://shrt123.herokuapp.com/
 
 **Missing features**
 - Analytics (click count)
